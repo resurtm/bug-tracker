@@ -28,14 +28,16 @@ How to update the project
 -------------------------
 
 PHP part:
+
 1. `cd ~/dev/bug-tracker`
 2. `composer update`
 3. `php bin/console security:check`
 
 Node.js part:
-4. `sudo npm install -g npm-check-updates`
-5. `npm-check-updates -u`
-6. `npm install`
+
+1. `sudo npm install -g npm-check-updates`
+2. `npm-check-updates -u`
+3. `npm install`
 
 What has been used
 ------------------
