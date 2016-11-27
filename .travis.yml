@@ -8,6 +8,7 @@ services:
     - mysql
 
 before_script:
+    - cp phpunit.xml.travis phpunit.xml
     - cp app/config/parameters.yml.travis app/config/parameters.yml
     - composer install
     - php bin/console doctrine:database:create --env=travis

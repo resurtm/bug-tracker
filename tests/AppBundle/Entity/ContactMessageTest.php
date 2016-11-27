@@ -17,7 +17,9 @@ class ContactMessageTest extends KernelTestCase
 
     protected function setUp()
     {
-        self::bootKernel();
+        self::bootKernel([
+            'environment' => $_SERVER['ENVIRONMENT'],
+        ]);
 
         $this->em = static::$kernel->getContainer()
             ->get('doctrine')
