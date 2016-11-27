@@ -27,13 +27,18 @@ How to run the project
 How to update the project
 -------------------------
 
+First of all:
+
+1. `git fetch --all`
+2. `git pull origin master`
+
 PHP part:
 
 1. `cd ~/dev/bug-tracker`
 2. `composer update`
 3. `php bin/console security:check`
 
-Node.js part:
+JS part:
 
 1. `sudo npm install -g npm-check-updates`
 2. `npm-check-updates -u`
