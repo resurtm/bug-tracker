@@ -26,5 +26,6 @@
 /phpunit.phar
 
 # Webpack generated release files
-/web/main.js
-/web/main.js.map
+!/web/assets/
+/web/assets/*
+!web/assets/.gitkeep

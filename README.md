@@ -26,6 +26,13 @@ How to run the project
 7. Open your browser at URL `http://127.0.0.1:8000`
 8. That's all!
 
+How to build project for staging/prod envs
+------------------------------------------
+
+TODO: finish this section
+
+1. `./node_modules/webpack/bin/webpack.js`
+
 How to update the project
 -------------------------
 

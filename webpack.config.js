@@ -10,7 +10,8 @@ module.exports = {
     ],
     output: {
         publicPath: '/',
-        filename: './web/main.js'
+        filename: 'main.js',
+        path: path.resolve(__dirname, 'web', 'assets')
     },
     debug: true,
     devtool: 'source-map',

@@ -20,7 +20,9 @@ framework:
     validation:      { enable_annotations: true }
     #serializer:      { enable_annotations: true }
     assets:
-        base_urls: ["%assets_base_url%"]
+        packages:
+            webpack:
+                base_urls: "%webpack_assets_base_url%"
     templating:
         engines: ['twig']
     default_locale:  "%locale%"
