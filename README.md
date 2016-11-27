@@ -1,6 +1,8 @@
 Bug Tracker
 ===========
 
+[![Build Status](https://travis-ci.org/resurtm/bug-tracker.svg?branch=master)](https://travis-ci.org/resurtm/bug-tracker)
+
 How to install the project
 --------------------------
 
