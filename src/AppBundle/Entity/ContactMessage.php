@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="contact_message")
@@ -23,6 +24,9 @@ class ContactMessage
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min=2, max=100)
      */
     private $name;
 
@@ -30,6 +34,10 @@ class ContactMessage
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=100)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min=2, max=100)
+     * @Assert\Email()
      */
     private $email;
 
@@ -37,6 +45,9 @@ class ContactMessage
      * @var string
      *
      * @ORM\Column(name="message", type="text")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min=2, max=10000)
      */
     private $message;
 
