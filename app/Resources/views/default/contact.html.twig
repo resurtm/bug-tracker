@@ -1,0 +1,23 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Contact Us &mdash; {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="col-md-7">
+
+            <h1>Contact Us</h1>
+            <p class="lead">Please do not hesitate to ping us if you have any questions!</p>
+
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+            {{ form_start(form, {
+                attr: {
+                    novalidate: 'novalidate'
+                }
+            }) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+{% endblock %}
