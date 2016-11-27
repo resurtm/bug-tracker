@@ -4,13 +4,13 @@ var webpack = require('webpack');
 module.exports = {
     entry: [
         'babel-polyfill',
-        './app/Resources/public/css/main.less',
+        './app/Resources/public/less/main.less',
         './app/Resources/public/js/main.js',
         'webpack-dev-server/client?http://localhost:8090'
     ],
     output: {
         publicPath: '/',
-        filename: 'main.js'
+        filename: './web/main.js'
     },
     debug: true,
     devtool: 'source-map',

@@ -24,3 +24,7 @@
 
 # PHPUnit
 /phpunit.phar
+
+# Webpack generated release files
+/web/main.js
+/web/main.js.map

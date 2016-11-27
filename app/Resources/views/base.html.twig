@@ -18,7 +18,7 @@
 {% if app.environment == "dev" %}
     <script type="text/javascript" src="{{ asset('webpack-dev-server.js') }}"></script>
 {% endif %}
-<script type="text/javascript" src="{{ asset('main.js') }}"></script>
+<script type="text/javascript" src="{{ asset('web/main.js') }}"></script>
 
 {% block javascripts %}{% endblock %}
 
