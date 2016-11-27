@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class DefaultControllerTest extends WebTestCase
 {
-    protected function assertAction($url, $selector, $text, $title)
+    private function assertAction($url, $selector, $text, $title)
     {
         $client = static::createClient();
         $crawler = $client->request('GET', $url);
