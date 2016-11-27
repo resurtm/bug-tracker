@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\ContactMessage;
+use AppBundle\Form\ContactMessageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +31,21 @@ class DefaultController extends Controller
      */
     public function contactAction(Request $request)
     {
-        return $this->render('default/contact.html.twig');
+        $contactMessage = new ContactMessage();
+        $form = $this->createForm(ContactMessageType::class, $contactMessage);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($contactMessage);
+            $em->flush();
+
+            $this->addFlash('success', '<strong>Thank you!</strong> We will contact you as soon as possible.');
+            return $this->redirectToRoute('contact');
+        }
+
+        return $this->render('default/contact.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
