@@ -31,5 +31,6 @@
 
     <logging>
         <log type="coverage-html" target="./var/logs/coverage"/>
+        <log type="coverage-text" target="php://stdout"/>
     </logging>
 </phpunit>
