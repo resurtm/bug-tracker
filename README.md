@@ -29,8 +29,9 @@ How to update the project
 
 First of all:
 
-1. `git fetch --all`
-2. `git pull origin master`
+1. `cd ~/dev/bug-tracker`
+2. `git fetch --all`
+3. `git pull origin master`
 
 PHP part:
 
@@ -40,9 +41,25 @@ PHP part:
 
 JS part:
 
-1. `sudo npm install -g npm-check-updates`
-2. `npm-check-updates -u`
-3. `npm install`
+1. `cd ~/dev/bug-tracker`
+2. `sudo npm install -g npm-check-updates`
+3. `npm-check-updates -u`
+4. `npm install`
+
+How to execute tests
+--------------------
+
+PHPUnit installation:
+
+1. `cd ~/dev/bug-tracker`
+2. `wget https://phar.phpunit.de/phpunit.phar`
+3. `chmod a+x phpunit.phar`
+4. `./phpunit.phar --version`
+
+Running tests:
+
+1. `cd ~/dev/bug-tracker`
+2. `./phpunit.phar`
 
 What has been used
 ------------------
