@@ -1,12 +1,15 @@
 parameters:
     database_host: 127.0.0.1
-    database_port: null
-    database_name: symfony
+    database_port: ~
+    database_name: bug_tracker_test
     database_user: root
-    database_password: null
+    database_password: ~
+
     mailer_transport: smtp
     mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
-    secret: travis-secret-token
+    mailer_user: ~
+    mailer_password: ~
+
+    secret: travis-ci-secret-token
+
     webpack_assets_base_url: 'http://localhost:8090'

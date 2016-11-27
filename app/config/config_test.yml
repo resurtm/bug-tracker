@@ -14,3 +14,11 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+doctrine:
+    dbal:
+        host:     localhost
+        port:     ~
+        dbname:   bug_tracker_test
+        user:     root
+        password: 123123

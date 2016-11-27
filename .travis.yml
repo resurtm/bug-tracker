@@ -2,14 +2,17 @@ language: php
 php:
     - '7.0'
     #- hhvm
-    - nightly
+    #- nightly
+
+services:
+    - mysql
 
 before_script:
     - cp app/config/parameters.yml.travis app/config/parameters.yml
     - composer install
-    - php bin/console doctrine:database:create --env=test
-    - php bin/console doctrine:schema:create --env=test
-    #- php bin/console doctrine:fixtures:load -n --env=test
+    - php bin/console doctrine:database:create --env=travis
+    - php bin/console doctrine:schema:create --env=travis
+    #- php bin/console doctrine:fixtures:load -n --env=travis
 
 script:
     - phpunit

@@ -1,0 +1,10 @@
+imports:
+    - { resource: config_test.yml }
+
+doctrine:
+    dbal:
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
