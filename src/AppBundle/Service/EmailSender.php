@@ -3,19 +3,34 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\ContactMessage;
+use Symfony\Bundle\TwigBundle\TwigEngine;
 
 class EmailSender
 {
+    /**
+     * @var \Swift_Mailer
+     */
     private $mailer;
+    /**
+     * @var TwigEngine
+     */
+    private $templating;
+    /**
+     * @var string
+     */
     private $supportEmail;
+    /**
+     * @var string
+     */
     private $fromEmail;
 
     /**
      * @param \Swift_Mailer $mailer
      */
-    public function __construct(\Swift_Mailer $mailer, $supportEmail, $fromEmail)
+    public function __construct(\Swift_Mailer $mailer, $templating, $supportEmail, $fromEmail)
     {
         $this->mailer = $mailer;
+        $this->templating = $templating;
         $this->supportEmail = $supportEmail;
         $this->fromEmail = $fromEmail;
     }
@@ -27,15 +42,15 @@ class EmailSender
     {
         $message = \Swift_Message::newInstance()
             ->setSubject('Bug Tracker: New Contact Message')
-            ->setFrom($this->supportEmail)
-            ->setTo($this->fromEmail)
+            ->setTo($this->supportEmail)
+            ->setFrom($this->fromEmail)
             ->setReplyTo($contactMessage->getEmail())
             ->setBody(
-                'html',
+                $this->templating->render('mail/contact-message.html.twig', ['contactMessage' => $contactMessage]),
                 'text/html'
             )
             ->addPart(
-                'plain',
+                $this->templating->render('mail/contact-message.txt.twig', ['contactMessage' => $contactMessage]),
                 'text/plain'
             );
 

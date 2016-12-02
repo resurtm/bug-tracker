@@ -22,4 +22,4 @@ services:
 
     app.service.email_sender:
         class: AppBundle\Service\EmailSender
-        arguments: ['@mailer', "%email_support%", "%email_from%"]
+        arguments: ['@mailer', '@templating', "%email_support%", "%email_from%"]
