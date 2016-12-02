@@ -8,6 +8,7 @@ services:
     - mysql
 
 before_script:
+    - wget https://phar.phpunit.de/phpunit.phar
     - cp phpunit.xml.travis phpunit.xml
     - cp app/config/parameters.yml.travis app/config/parameters.yml
     - composer install
@@ -16,7 +17,7 @@ before_script:
     #- php bin/console doctrine:fixtures:load -n --env=travis
 
 script:
-    - phpunit
+    - ./phpunit.phar
 
 notifications:
     email:
