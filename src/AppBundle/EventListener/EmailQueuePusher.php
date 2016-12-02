@@ -6,6 +6,7 @@ use AppBundle\Command\Worker\EmailWorkerCommand;
 use AppBundle\Entity\ContactMessage;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Leezy\PheanstalkBundle\Proxy\PheanstalkProxy;
+use Symfony\Component\Serializer\Serializer;
 
 class EmailQueuePusher
 {
@@ -13,13 +14,19 @@ class EmailQueuePusher
      * @var PheanstalkProxy
      */
     private $pheanstalk;
+    /**
+     * @var Serializer
+     */
+    private $serializer;
 
     /**
      * @param PheanstalkProxy $pheanstalk
+     * @param Serializer $serializer
      */
-    public function __construct(PheanstalkProxy $pheanstalk)
+    public function __construct(PheanstalkProxy $pheanstalk, Serializer $serializer)
     {
         $this->pheanstalk = $pheanstalk;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -36,6 +43,6 @@ class EmailQueuePusher
 
         $this->pheanstalk
             ->useTube(EmailWorkerCommand::EMAIL_TUBE)
-            ->put(serialize($entity));
+            ->put($this->serializer->serialize($entity, 'json'));
     }
 }

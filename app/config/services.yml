@@ -10,6 +10,6 @@ services:
 
     email_queue_pusher:
         class: AppBundle\EventListener\EmailQueuePusher
-        arguments: ['@leezy.pheanstalk']
+        arguments: ['@leezy.pheanstalk', '@serializer']
         tags:
             - { name: doctrine.event_listener, event: postPersist }

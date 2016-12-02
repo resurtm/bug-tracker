@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Serializer\Serializer;
 
 class EmailWorkerCommand extends ContainerAwareCommand
 {
@@ -44,6 +45,8 @@ class EmailWorkerCommand extends ContainerAwareCommand
 
         /** @var PheanstalkProxy $pheanstalk */
         $pheanstalk = $this->getContainer()->get('leezy.pheanstalk.primary');
+        /** @var Serializer $serializer */
+        $serializer = $this->getContainer()->get('serializer');
 
         $this->mainLoopActive = true;
 
@@ -68,7 +71,7 @@ class EmailWorkerCommand extends ContainerAwareCommand
 
             // TODO: send emails here
             /** @var ContactMessage $entity */
-            $entity = unserialize($job->getData());
+            $entity = $serializer->deserialize($job->getData(), ContactMessage::class, 'json');
             $output->writeln($entity->getEmail());
 
             $pheanstalk->delete($job);
