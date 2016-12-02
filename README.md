@@ -25,6 +25,7 @@ How to run the project
 6. You should have three terminal tabs: one for Webpack dev server, another one for PHP dev server, and the last one to work with the project with.
 7. Open your browser at URL `http://127.0.0.1:8000`
 8. That's all!
+9. You can also start `tail` for MySQL query log: `tail -f /var/log/mysql/general.log`
 
 How to build project for staging/prod envs
 ------------------------------------------
