@@ -134,4 +134,3 @@ class ContactMessage
         return $this->message;
     }
 }
-

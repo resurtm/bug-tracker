@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
-class ContactMessageRepository extends \Doctrine\ORM\EntityRepository
+use Doctrine\ORM\EntityRepository;
+
+class ContactMessageRepository extends EntityRepository
 {
 }
