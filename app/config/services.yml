@@ -13,3 +13,9 @@ services:
         arguments: ['@leezy.pheanstalk', '@serializer']
         tags:
             - { name: doctrine.event_listener, event: postPersist }
+
+    app.command.email_worker_command:
+        class: AppBundle\Command\Worker\EmailWorkerCommand
+        arguments: ['@leezy.pheanstalk', '@serializer']
+        tags:
+            - { name: console.command }

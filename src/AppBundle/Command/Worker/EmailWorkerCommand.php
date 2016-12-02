@@ -18,9 +18,29 @@ class EmailWorkerCommand extends ContainerAwareCommand
     const EMAIL_TUBE = 'emails';
 
     /**
+     * @var PheanstalkProxy
+     */
+    private $pheanstalk;
+    /**
+     * @var Serializer
+     */
+    private $serializer;
+    /**
      * @var bool
      */
     private $mainLoopActive = false;
+
+    /**
+     * @param PheanstalkProxy $pheanstalk
+     * @param Serializer $serializer
+     * @param string $name
+     */
+    public function __construct(PheanstalkProxy $pheanstalk, Serializer $serializer, $name = null)
+    {
+        parent::__construct($name);
+        $this->pheanstalk = $pheanstalk;
+        $this->serializer = $serializer;
+    }
 
     /**
      * @inheritdoc
@@ -43,11 +63,6 @@ class EmailWorkerCommand extends ContainerAwareCommand
             '=================',
         ]);
 
-        /** @var PheanstalkProxy $pheanstalk */
-        $pheanstalk = $this->getContainer()->get('leezy.pheanstalk.primary');
-        /** @var Serializer $serializer */
-        $serializer = $this->getContainer()->get('serializer');
-
         $this->mainLoopActive = true;
 
         pcntl_signal(SIGTERM, function () { $this->mainLoopActive = false; });
@@ -57,7 +72,7 @@ class EmailWorkerCommand extends ContainerAwareCommand
             pcntl_signal_dispatch();
 
             /** @var Job $job */
-            $job = $pheanstalk
+            $job = $this->pheanstalk
                 ->watch(self::EMAIL_TUBE)
                 ->reserve(5);
 
@@ -71,10 +86,10 @@ class EmailWorkerCommand extends ContainerAwareCommand
 
             // TODO: send emails here
             /** @var ContactMessage $entity */
-            $entity = $serializer->deserialize($job->getData(), ContactMessage::class, 'json');
+            $entity = $this->serializer->deserialize($job->getData(), ContactMessage::class, 'json');
             $output->writeln($entity->getEmail());
 
-            $pheanstalk->delete($job);
+            $this->pheanstalk->delete($job);
         }
 
         $output->writeln('Finished!');
