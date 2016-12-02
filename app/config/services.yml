@@ -8,7 +8,7 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
-    email_queue_pusher:
+    app.listener.email_queue_pusher:
         class: AppBundle\EventListener\EmailQueuePusher
         arguments: ['@leezy.pheanstalk', '@serializer']
         tags:
@@ -16,6 +16,10 @@ services:
 
     app.command.email_worker_command:
         class: AppBundle\Command\Worker\EmailWorkerCommand
-        arguments: ['@leezy.pheanstalk', '@serializer']
+        arguments: ['@leezy.pheanstalk', '@serializer', '@app.service.email_sender']
         tags:
             - { name: console.command }
+
+    app.service.email_sender:
+        class: AppBundle\Service\EmailSender
+        arguments: ['@mailer', "%email_support%", "%email_from%"]

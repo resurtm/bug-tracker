@@ -5,6 +5,7 @@ declare(ticks = 1);
 namespace AppBundle\Command\Worker;
 
 use AppBundle\Entity\ContactMessage;
+use AppBundle\Service\EmailSender;
 use Leezy\PheanstalkBundle\Proxy\PheanstalkProxy;
 use Pheanstalk\Job;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -16,6 +17,7 @@ use Symfony\Component\Serializer\Serializer;
 class EmailWorkerCommand extends ContainerAwareCommand
 {
     const EMAIL_TUBE = 'emails';
+    const RESERVE_TIMEOUT = 5;
 
     /**
      * @var PheanstalkProxy
@@ -26,6 +28,10 @@ class EmailWorkerCommand extends ContainerAwareCommand
      */
     private $serializer;
     /**
+     * @var EmailSender
+     */
+    private $emailSender;
+    /**
      * @var bool
      */
     private $mainLoopActive = false;
@@ -35,11 +41,13 @@ class EmailWorkerCommand extends ContainerAwareCommand
      * @param Serializer $serializer
      * @param string $name
      */
-    public function __construct(PheanstalkProxy $pheanstalk, Serializer $serializer, $name = null)
+    public function __construct(PheanstalkProxy $pheanstalk, Serializer $serializer, EmailSender $emailSender,
+                                $name = null)
     {
         parent::__construct($name);
         $this->pheanstalk = $pheanstalk;
         $this->serializer = $serializer;
+        $this->emailSender = $emailSender;
     }
 
     /**
@@ -65,8 +73,12 @@ class EmailWorkerCommand extends ContainerAwareCommand
 
         $this->mainLoopActive = true;
 
-        pcntl_signal(SIGTERM, function () { $this->mainLoopActive = false; });
-        pcntl_signal(SIGINT, function () { $this->mainLoopActive = false; });
+        pcntl_signal(SIGTERM, function () {
+            $this->mainLoopActive = false;
+        });
+        pcntl_signal(SIGINT, function () {
+            $this->mainLoopActive = false;
+        });
 
         while ($this->mainLoopActive) {
             pcntl_signal_dispatch();
@@ -74,7 +86,7 @@ class EmailWorkerCommand extends ContainerAwareCommand
             /** @var Job $job */
             $job = $this->pheanstalk
                 ->watch(self::EMAIL_TUBE)
-                ->reserve(5);
+                ->reserve(self::RESERVE_TIMEOUT);
 
             if (!($job instanceof Job)) {
                 if ($input->getOption('single-run')) {
@@ -84,11 +96,16 @@ class EmailWorkerCommand extends ContainerAwareCommand
                 }
             }
 
-            // TODO: send emails here
-            /** @var ContactMessage $entity */
-            $entity = $this->serializer->deserialize($job->getData(), ContactMessage::class, 'json');
-            $output->writeln($entity->getEmail());
+            /** @var ContactMessage $contactMessage */
+            $contactMessage = $this->serializer->deserialize($job->getData(), ContactMessage::class, 'json');
 
+            $output->write('Sending contact message email... ');
+            $this->emailSender->sendContactMessage($contactMessage);
+
+            $output->writeln([
+                'Sent!',
+                '--------------------------------------',
+            ]);
             $this->pheanstalk->delete($job);
         }
 
