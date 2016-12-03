@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="contact_message")
+ * @ORM\Table(name="contact_messages")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ContactMessageRepository")
  */
 class ContactMessage
