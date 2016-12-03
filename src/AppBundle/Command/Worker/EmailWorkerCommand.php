@@ -1,6 +1,6 @@
 <?php
 
-declare(ticks = 1);
+//declare(ticks = 1);
 
 namespace AppBundle\Command\Worker;
 
@@ -73,15 +73,15 @@ class EmailWorkerCommand extends ContainerAwareCommand
 
         $this->mainLoopActive = true;
 
-        pcntl_signal(SIGTERM, function () {
-            $this->mainLoopActive = false;
-        });
-        pcntl_signal(SIGINT, function () {
-            $this->mainLoopActive = false;
-        });
+//        pcntl_signal(SIGTERM, function () {
+//            $this->mainLoopActive = false;
+//        });
+//        pcntl_signal(SIGINT, function () {
+//            $this->mainLoopActive = false;
+//        });
 
         while ($this->mainLoopActive) {
-            pcntl_signal_dispatch();
+//            pcntl_signal_dispatch();
 
             /** @var Job $job */
             $job = $this->pheanstalk

@@ -22,3 +22,10 @@ doctrine:
         dbname:   bug_tracker_test
         user:     root
         password: 123123
+
+services:
+    app.listener.email_queue_pusher:
+        class: AppBundle\EventListener\EmailQueuePusherStub
+        arguments: ['@leezy.pheanstalk', '@serializer']
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
