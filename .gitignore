@@ -29,3 +29,6 @@
 !/web/assets/
 /web/assets/*
 !web/assets/.gitkeep
+
+# temporary files
+*.php~
