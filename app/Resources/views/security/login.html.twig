@@ -2,28 +2,40 @@
 
 {% block body %}
     <div class="container">
-        <div class="col-md-12">
+        <div class="col-md-6 col-md-offset-3">
 
             <h1>Sign In</h1>
+            <p class="lead">Please enter a valid credentials to log into the site:</p>
 
             {% if error %}
-                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                <div class="alert alert-danger">
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </li>
+                    </ul>
+                </div>
             {% endif %}
 
-            <form action="{{ path('login') }}" method="post">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+            <form action="{{ path('login') }}" method="post" novalidate="novalidate">
+                <div class="form-group {% if error %}has-error{% endif %}">
+                    <label class="control-label required" for="login_form_username">Username</label>
+                    <input type="text" id="login_form_username" name="_username"
+                           required="required" placeholder="Username" class="form-control"/>
+                </div>
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="_password"/>
+                <div class="form-group {% if error %}has-error{% endif %}">
+                    <label class="control-label required" for="login_form_password">Password</label>
+                    <input type="password" id="login_form_password" name="_password"
+                           required="required" placeholder="Password" class="form-control"/>
+                </div>
 
-                {#
-                    If you want to control the URL the user
-                    is redirected to on success (more details below)
-                    <input type="hidden" name="_target_path" value="/account" />
-                #}
+                {#<input type="hidden" name="_target_path" value="/" />#}
 
-                <button type="submit">login</button>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default btn-lg btn">Log In</button>
+                </div>
             </form>
 
         </div>
