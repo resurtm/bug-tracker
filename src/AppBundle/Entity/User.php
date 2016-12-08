@@ -3,11 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="Email already taken")
+ * @UniqueEntity(fields="username", message="Username already taken")
  */
 class User implements AdvancedUserInterface, \Serializable
 {
@@ -20,6 +24,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
+     * @Assert\NotBlank()
      */
     private $username;
 
@@ -30,6 +35,8 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
@@ -37,6 +44,12 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     public function getSalt()
     {
@@ -191,5 +204,15 @@ class User implements AdvancedUserInterface, \Serializable
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
     }
 }
