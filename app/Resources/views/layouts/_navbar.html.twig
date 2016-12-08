@@ -30,12 +30,15 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     {% if app.user %}
-                        <li class="">
+                        <li>
                             <a href="{{ logout_path('main') }}">Logout</a>
                         </li>
                     {% else %}
+                        <li class="{% if app.request.attributes.get('_route') == 'registration' %}active{% endif %}">
+                            <a href="{{ path('registration') }}">Sign Up</a>
+                        </li>
                         <li class="{% if app.request.attributes.get('_route') == 'login' %}active{% endif %}">
-                            <a href="{{ path('login') }}">Login</a>
+                            <a href="{{ path('login') }}">Log In</a>
                         </li>
                     {% endif %}
                 </ul>
