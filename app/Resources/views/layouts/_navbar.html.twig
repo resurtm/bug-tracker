@@ -26,6 +26,12 @@
                     <li class="{% if app.request.attributes.get('_route') == 'contact' %}active{% endif %}">
                         <a href="{{ path('contact') }}">Contact</a>
                     </li>
+                    <li class="{% if app.request.attributes.get('_route') == 'tickets' %}active{% endif %}">
+                        <a href="{{ path('tickets') }}">Tickets</a>
+                    </li>
+                    <li class="{% if app.request.attributes.get('_route') == 'create_ticket' %}active{% endif %}">
+                        <a href="{{ path('create_ticket') }}">Create Ticket</a>
+                    </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
