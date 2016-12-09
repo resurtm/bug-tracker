@@ -80,3 +80,6 @@ leezy_pheanstalk:
         primary:
             server: localhost
             default: true
+
+cocur_slugify:
+    rulesets: ['russian']

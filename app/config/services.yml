@@ -2,8 +2,10 @@ parameters:
 
 services:
     app.listener.ticket_blameable_setter:
-        class: AppBundle\EventListener\TicketBlameableFixer
+        class: AppBundle\EventListener\TicketEventsListener
         arguments: ['@security.token_storage']
+        calls:
+            - [setSlugify, ['@slugify']]
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
