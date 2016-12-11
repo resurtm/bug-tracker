@@ -4,22 +4,34 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Ticket;
 use AppBundle\Form\TicketType;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class TicketController extends Controller
 {
+    const PAGE_SIZE = 5;
+
     /**
-     * @Route("/tickets", name="tickets")
+     * @Route("/tickets/{page}", name="tickets", requirements={"page":"\d+"}, defaults={"page"=1})
      */
-    public function listAction()
+    public function listAction($page)
     {
-        return $this->render('ticket/list.html.twig');
+        /** @var Paginator $ticketsPaginator */
+        $ticketsPaginator = $this->getDoctrine()
+            ->getRepository('AppBundle:Ticket')
+            ->findAllTickets($page, self::PAGE_SIZE);
+
+        return $this->render('ticket/list.html.twig', [
+            'tickets' => $ticketsPaginator->getIterator(),
+            'currentPage' => $page,
+            'totalPages' => ceil($ticketsPaginator->count() / self::PAGE_SIZE),
+        ]);
     }
 
     /**
-     * @Route("/ticket/{id}-{slug}", name="view_ticket", requirements={"id": "\d+"})
+     * @Route("/ticket/{id}-{slug}", name="view_ticket", requirements={"id":"\d+"})
      */
     public function viewAction($id, $slug)
     {

@@ -9,6 +9,26 @@
             <h1>All Tickets</h1>
             <p class="lead">All tickets at this bug tracker.</p>
 
+            <table class="table table-striped">
+                <tr>
+                    <th>Title</th>
+                    <th>Date Posted</th>
+                </tr>
+
+                {% for ticket in tickets %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('view_ticket', {id: ticket.id, slug: ticket.slug}) }}">
+                                {{ ticket.title }}
+                            </a>
+                        </td>
+                        <td>{{ ticket.createdAt|date('d.m.Y') }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            {% include 'partials/_pagination.html.twig' with {page: currentPage, pages: totalPages, route: 'tickets'} only %}
+
         </div>
     </div>
 {% endblock %}
