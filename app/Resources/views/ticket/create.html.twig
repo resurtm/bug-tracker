@@ -9,6 +9,15 @@
             <h1>Submit New Ticket</h1>
             <p class="lead">Here you can submit your new ticket.</p>
 
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+            {{ form_start(form, {
+                attr: {
+                    novalidate: 'novalidate'
+                }
+            }) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+
         </div>
     </div>
 {% endblock %}

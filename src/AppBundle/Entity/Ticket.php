@@ -20,6 +20,9 @@ class Ticket
 
     /**
      * @ORM\Column(type="string", length=100)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min=2, max=100)
      */
     private $title;
 
@@ -30,6 +33,9 @@ class Ticket
 
     /**
      * @ORM\Column(type="text", length=65535)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min=10, max=65535)
      */
     private $description;
 
