@@ -40,6 +40,12 @@ class Ticket
     private $description;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Project")
+     * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
+     */
+    private $project;
+
+    /**
      * @ORM\Column(name="created_at", type="integer")
      */
     private $createdAt;
@@ -237,5 +243,29 @@ class Ticket
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set project
+     *
+     * @param Project $project
+     *
+     * @return Ticket
+     */
+    public function setProject(Project $project = null)
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * Get project
+     *
+     * @return Project
+     */
+    public function getProject()
+    {
+        return $this->project;
     }
 }
