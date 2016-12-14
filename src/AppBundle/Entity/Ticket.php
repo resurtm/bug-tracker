@@ -40,7 +40,7 @@ class Ticket
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Project")
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="tickets")
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      */
     private $project;
